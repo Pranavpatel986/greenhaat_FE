@@ -159,7 +159,7 @@ const ProductForm = () => {
         description: '',
         mrp: '',
         productType: '',
-        enable: true
+        enable: false
     });
 
     const handleChange = (e) => {

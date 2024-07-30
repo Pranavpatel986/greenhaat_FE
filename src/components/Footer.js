@@ -1,5 +1,6 @@
 import React from 'react'
 import greenhaat from '../assets/greenhaat.png'
+import { Link } from 'react-router-dom'
 
 const Footer = () => {
   return (
@@ -62,16 +63,22 @@ const Footer = () => {
               <a href="javascript:void(0)" className="text-gray-300 hover:text-white text-sm">About Us</a>
             </li>
             <li>
-              <a href="javascript:void(0)" className="text-gray-300 hover:text-white text-sm">Terms &amp; Conditions</a>
+              {/* <a href="javascript:void(0)" className="text-gray-300 hover:text-white text-sm">Terms &amp; Conditions</a> */}
+              <Link to="/terms-and-conditions" className="text-gray-300 hover:text-white text-sm">
+                Terms & Condiations
+              </Link>
             </li>
             <li>
-              <a href="javascript:void(0)" className="text-gray-300 hover:text-white text-sm">Privacy Policy</a>
+              {/* <a href="javascript:void(0)" className="text-gray-300 hover:text-white text-sm">Terms &amp; Conditions</a> */}
+              <Link to="/privacy-policy" className="text-gray-300 hover:text-white text-sm">
+                Privacy Policy
+              </Link>
             </li>
           </ul>
         </div>
       </div>
       <p className='text-gray-300 text-sm mt-8'>© 2023<a href='https://readymadeui.com/' target='_blank'
-        className="hover:underline mx-1">ReadymadeUI</a>All Rights Reserved.
+        className="hover:underline mx-1">GreenHaat</a>All Rights Reserved.
       </p>
     </footer>
   )

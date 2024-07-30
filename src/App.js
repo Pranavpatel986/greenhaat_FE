@@ -1,53 +1,25 @@
-// import { BrowserRouter , Routes, Route} from 'react-router-dom';
-// import './App.css';
-// import Footer from './components/Footer';
-// import Navbar from './components/Navbar'
-// import Product from './components/ProductComponent/Product';
-// import ProductForm from './components/ProductComponent/ProductForm';
-// import QueryForm from './components/QueryComponent/QueryForm';
-// import BrandForm from './components/ProductComponent/BrandForm';
-// import CompanyForm from './components/ProductComponent/CompanyForm';
-// import ProductList from './components/ProductComponent/ProductList';
-// import { Company } from './components/ProductComponent/Company';
-// import { Brand } from './components/ProductComponent/Brand';
-
-// export default function App() {
-//   return (
-//     <>
-//     <BrowserRouter>
-//       <Navbar/>
-//       <ProductList></ProductList>
-//       {/* <Company></Company>
-//       <Brand></Brand>
-//       <Product/> */}
-//       <Routes>
-//         {/* <Route path='/' element ={<EmployeeList/>} ></Route>
-//         <Route index element ={<EmployeeList/>} ></Route>
-//         <Route path='/employeeList' element ={<EmployeeList/>} ></Route>
-//         <Route path='/addEmployee' element ={<AddEmployee/>} ></Route>
-//         <Route path='/editEmployee/:id' element={<UpdateEmployee/>}></Route> */}
-//         <Route path='/addProduct' element={<ProductForm></ProductForm>}></Route>
-//         <Route path='addCompany' element={<CompanyForm></CompanyForm>}></Route>
-//         <Route path="/orderQuery" element={<QueryForm></QueryForm>}></Route>
-//         <Route path='/addBrand' element={<BrandForm></BrandForm>}></Route>
-//         <Route path='/productList' element={<ProductList></ProductList>}></Route>
-//       </Routes>
-//       <Footer/>
-//     </BrowserRouter>
-//     </>
-//   )
-// }
-
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
-import ProductForm from './components/ProductComponent/ProductForm';
 import QueryForm from './components/QueryComponent/QueryForm';
-import BrandForm from './components/ProductComponent/BrandForm';
-import CompanyForm from './components/ProductComponent/CompanyForm';
 import ProductList from './components/ProductComponent/ProductList';
+import Login from './components/authentication/login';
+import Signup from './components/authentication/Signup';
+import { AuthProvider } from './components/authentication/AuthContext';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Header from './components/header';
+import AdminHome from './components/Admin/AdminHome';
+import BrandForm from'./components/Admin/CompanyEdit/BrandForm';
+import AuthGuard from './components/authentication/AuthGuard';
+import HomePage from './components/Home';
+import CompanyForm from './components/Admin/CompanyEdit/CompanyForm';
+import ProductForm from './components/Admin/ProductsEdit/ProductForm'
+import TermsAndConditions from './TermsAndConditions';
+import PrivacyPolicy from './components/PrivacyPolicy';
+import Profile from './components/authentication/Profile';
 
 export default function App() {
   const [searchResults, setSearchResults] = useState([]);
@@ -57,19 +29,33 @@ export default function App() {
   };
 
   return (
-    <>
+    <AuthProvider>
       <BrowserRouter>
-        <Navbar onSearch={handleSearch} />
+      <Header onSearch={handleSearch} ></Header>
+        <Navbar />
         <Routes>
-          <Route path="/" element={<ProductList searchResults={searchResults} />} />
-          <Route path='/addProduct' element={<ProductForm />} />
-          <Route path='/addCompany' element={<CompanyForm />} />
-          <Route path='/orderQuery' element={<QueryForm />} />
-          <Route path='/addBrand' element={<BrandForm />} />
+          <Route path='/addProduct' element={<AuthGuard><ProductForm /></AuthGuard>} />
+          <Route path='/addCompany' element={<AuthGuard><CompanyForm /></AuthGuard>} />
+          <Route path='/orderQuery' element={<AuthGuard><QueryForm /></AuthGuard>} />
+          <Route path='/addBrand' element={<AuthGuard><BrandForm /></AuthGuard>} />
           <Route path='/productList' element={<ProductList searchResults={searchResults} />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/signup' element={<Signup />} />
+          <Route path='/' element={<HomePage></HomePage>}></Route>
+          <Route path="/profile" element={<AuthGuard><Profile /></AuthGuard>} />
+          <Route
+            path="/admin-home"
+            element={
+              <AuthGuard><AdminHome /></AuthGuard>
+            }
+          />
+          <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        
         </Routes>
         <Footer />
+        <ToastContainer />
       </BrowserRouter>
-    </>
+    </AuthProvider>
   );
 }
